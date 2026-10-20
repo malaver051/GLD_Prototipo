@@ -1,0 +1,63 @@
+/* =====================================================================
+   GLD · Tokens de diseño
+   Paleta sobria: verde azulado institucional sobre gris niebla, con un
+   latón apagado solo para estados que piden atención (claves temporales).
+   ===================================================================== */
+:root {
+  /* Superficies */
+  --fondo: #f1f3f2;
+  --superficie: #ffffff;
+  --superficie-2: #f7f8f8;
+
+  /* Texto */
+  --tinta: #1e2b2f;
+  --tinta-2: #4f5d63;
+  --tinta-3: #7d8a90;
+
+  /* Líneas */
+  --linea: #dde2e0;
+  --linea-fuerte: #c3cbc8;
+
+  /* Marca */
+  --primario: #2d5b5e;
+  --primario-hover: #244a4d;
+  --primario-suave: #e2eceb;
+  --primario-tinta: #1f4144;
+
+  /* Estados */
+  --error: #a3453b;
+  --error-suave: #f7e9e6;
+  --exito: #3c6f52;
+  --exito-suave: #e5efe8;
+  --atencion: #86662f;
+  --atencion-suave: #f4eddf;
+
+  /* Tipografía */
+  --fuente: "Public Sans Variable", "Segoe UI", system-ui, sans-serif;
+  --t-xs: 0.8125rem;   /* 13 */
+  --t-sm: 0.875rem;    /* 14 */
+  --t-base: 0.9375rem; /* 15 */
+  --t-md: 1.0625rem;   /* 17 */
+  --t-lg: 1.375rem;    /* 22 */
+  --t-xl: 1.875rem;    /* 30 */
+  --t-2xl: 2.5rem;     /* 40 */
+
+  /* Espaciado (base 4) */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 20px;
+  --e-6: 24px;
+  --e-8: 32px;
+  --e-10: 40px;
+  --e-12: 48px;
+
+  /* Radios: los controles son discretos; los contenedores, más amplios */
+  --r-control: 8px;
+  --r-panel: 14px;
+  --r-pastilla: 999px;
+
+  --sombra-panel: 0 1px 2px rgba(30, 43, 47, 0.06), 0 8px 24px -12px rgba(30, 43, 47, 0.18);
+  --enfoque: 0 0 0 3px rgba(45, 91, 94, 0.28);
+}

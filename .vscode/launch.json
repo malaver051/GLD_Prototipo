@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "ComunidadApplication",
+      "request": "launch",
+      "mainClass": "com.gld.comunidad.ComunidadApplication"
+    },
+    {
+      "type": "java",
+      "name": "TramitesApplication",
+      "request": "launch",
+      "mainClass": "com.gld.tramites.TramitesApplication",
+      "projectName": "ms-tramites"
+    },
+    {
+      "type": "java",
+      "name": "ms-identidad",
+      "request": "launch",
+      "mainClass": "com.gld.identidad.IdentidadApplication",
+      "projectName": "ms-identidad"
+    }
+  ]
+}

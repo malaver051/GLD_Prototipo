@@ -1,0 +1,38 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ms-identidad
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gld
+    username: postgres
+    password: "1234"
+  sql:
+    init:
+      mode: always            # ejecuta schema.sql (crea el esquema "identidad")
+  jpa:
+    hibernate:
+      ddl-auto: update        # crea/actualiza las tablas a partir de las entidades
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: identidad
+        format_sql: true
+
+gld:
+  jwt:
+    # Clave de firma en Base64 (mínimo 256 bits). Cambiarla fuera del prototipo.
+    secreto: "R0xELU1leGljby1Qcm90b3RpcG8tQ2xhdmUtU2VjcmV0YS0yMDI2LUlkZW50aWRhZC1KV1Q="
+    minutos-sesion: 480       # 8 horas
+    minutos-temporal: 15      # tokens de MFA y de cambio de clave
+  mfa:
+    emisor: "GLD Municipal"   # nombre que aparece en Microsoft Authenticator
+  dominio-gobierno: "@gobierno.com"
+  frontend-url: "http://localhost:5173"
+  recuperacion:
+    minutos-validez: 30
+
+logging:
+  level:
+    mx.gld: INFO

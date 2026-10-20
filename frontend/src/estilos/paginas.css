@@ -1,0 +1,750 @@
+/* =====================================================================
+   Pantallas de acceso (ingreso, registro, verificación, recuperación)
+   ===================================================================== */
+.acceso {
+  display: grid;
+  grid-template-columns: minmax(340px, 5fr) 7fr;
+  min-height: 100vh;
+}
+
+.acceso__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-10);
+  padding: var(--e-10) var(--e-12);
+  overflow: hidden;
+  background: var(--primario);
+  color: #dbe6e4;
+}
+
+.acceso__lema {
+  position: relative;
+  z-index: 1;
+  max-width: 24rem;
+  margin-top: 12vh;
+}
+
+.acceso__lema h2 {
+  color: #fff;
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+}
+
+.acceso__lema p {
+  margin-top: var(--e-4);
+  font-size: var(--t-md);
+  line-height: 1.6;
+  color: #c8d8d5;
+}
+
+/* Textura: claves INEGI de los municipios, como un registro catastral */
+.acceso__claves {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46%;
+  padding: 0 var(--e-12) var(--e-8);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: end;
+  column-gap: var(--e-8);
+  row-gap: 3px;
+  margin: 0;
+  list-style: none;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.17);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to top, #000 45%, transparent);
+  mask-image: linear-gradient(to top, #000 45%, transparent);
+}
+
+.acceso__claves li {
+  display: flex;
+  gap: var(--e-3);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.acceso__claves span:first-child {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.acceso__contenido {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--e-12) var(--e-6);
+}
+
+.acceso__formulario {
+  width: 100%;
+  max-width: 420px;
+}
+
+.acceso__formulario--ancho {
+  max-width: 520px;
+}
+
+.acceso__encabezado {
+  display: grid;
+  gap: var(--e-2);
+  margin-bottom: var(--e-8);
+}
+
+.acceso__encabezado h1 {
+  font-size: var(--t-xl);
+}
+
+.acceso__encabezado p {
+  color: var(--tinta-2);
+}
+
+.acceso__pie {
+  margin-top: var(--e-8);
+  padding-top: var(--e-6);
+  border-top: 1px solid var(--linea);
+  font-size: var(--t-sm);
+  color: var(--tinta-2);
+}
+
+.pila {
+  display: grid;
+  gap: var(--e-5);
+}
+
+.pila--compacta {
+  gap: var(--e-3);
+}
+
+.fila-dos {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--e-5) var(--e-3);
+}
+
+.fila-enlace {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--t-sm);
+}
+
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--e-6);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Marca */
+.marca {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.marca__sello {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 1.5px solid currentColor;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+}
+
+.marca__nombre {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.acceso__panel .marca {
+  color: #fff;
+}
+
+/* Pasos del registro (sí es una secuencia) */
+.pasos {
+  display: flex;
+  gap: var(--e-2);
+  margin: 0 0 var(--e-6);
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-xs);
+  color: var(--tinta-3);
+}
+
+.pasos li {
+  flex: 1;
+  display: grid;
+  gap: 6px;
+}
+
+.pasos li::before {
+  content: "";
+  height: 3px;
+  border-radius: 2px;
+  background: var(--linea);
+}
+
+.pasos li[data-estado="actual"] {
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+.pasos li[data-estado="actual"]::before,
+.pasos li[data-estado="hecho"]::before {
+  background: var(--primario);
+}
+
+/* Vincular Microsoft Authenticator */
+.vincular {
+  display: grid;
+  gap: var(--e-6);
+}
+
+.vincular__instrucciones {
+  display: grid;
+  gap: var(--e-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: instruccion;
+}
+
+.vincular__instrucciones li {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: var(--e-3);
+  font-size: var(--t-sm);
+  color: var(--tinta-2);
+  counter-increment: instruccion;
+}
+
+.vincular__instrucciones li::before {
+  content: counter(instruccion);
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primario-suave);
+  color: var(--primario-tinta);
+  font-size: var(--t-xs);
+  font-weight: 700;
+}
+
+.vincular__instrucciones strong {
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+.qr {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--e-5);
+  align-items: center;
+  padding: var(--e-4);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-panel);
+  background: var(--superficie);
+}
+
+.qr__imagen {
+  width: 168px;
+  height: 168px;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.qr__clave {
+  display: grid;
+  gap: var(--e-2);
+  font-size: var(--t-xs);
+  color: var(--tinta-2);
+}
+
+.qr__secreto {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--tinta);
+  letter-spacing: 0.06em;
+  word-break: break-word;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 520px) {
+  .qr {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .acceso {
+    grid-template-columns: 1fr;
+  }
+  .acceso__panel {
+    padding: var(--e-5) var(--e-6);
+    gap: 0;
+  }
+  .acceso__lema,
+  .acceso__claves {
+    display: none;
+  }
+  .acceso__contenido {
+    align-items: flex-start;
+    padding: var(--e-8) var(--e-5) var(--e-12);
+  }
+  .fila-dos {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================================
+   Aplicación (portal ciudadano, consola municipal, administración)
+   ===================================================================== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--e-6);
+  height: 64px;
+  padding: 0 var(--e-8);
+  background: var(--superficie);
+  border-bottom: 1px solid var(--linea);
+}
+
+.barra .marca {
+  color: var(--primario);
+}
+
+.barra__seccion {
+  padding-left: var(--e-6);
+  border-left: 1px solid var(--linea);
+  font-size: var(--t-sm);
+  color: var(--tinta-2);
+}
+
+.barra__usuario {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+}
+
+.barra__identidad {
+  display: grid;
+  text-align: right;
+  line-height: 1.3;
+}
+
+.barra__identidad strong {
+  font-size: var(--t-sm);
+  font-weight: 600;
+}
+
+.barra__identidad span {
+  font-size: var(--t-xs);
+  color: var(--tinta-3);
+}
+
+.app__contenido {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--e-8);
+}
+
+.encabezado-pagina {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--e-6);
+  margin-bottom: var(--e-6);
+}
+
+.encabezado-pagina h1 {
+  font-size: var(--t-xl);
+}
+
+.encabezado-pagina p {
+  margin-top: var(--e-2);
+  color: var(--tinta-2);
+  max-width: 60ch;
+}
+
+.panel {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--r-panel);
+}
+
+.panel__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+  padding: var(--e-4) var(--e-5);
+  border-bottom: 1px solid var(--linea);
+}
+
+/* Pestañas */
+.pestanas {
+  display: flex;
+  gap: var(--e-6);
+  margin-bottom: var(--e-6);
+  border-bottom: 1px solid var(--linea);
+}
+
+.pestanas button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  padding: var(--e-3) 0;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--tinta-2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pestanas button[aria-selected="true"] {
+  color: var(--tinta);
+  border-bottom-color: var(--primario);
+}
+
+.contador {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-pastilla);
+  background: var(--atencion-suave);
+  color: var(--atencion);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Filtros sobre la tabla */
+.filtros {
+  display: flex;
+  gap: var(--e-3);
+  align-items: center;
+}
+
+.segmentado {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--superficie-2);
+  border: 1px solid var(--linea);
+}
+
+.segmentado button {
+  height: 30px;
+  padding: 0 var(--e-3);
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tinta-2);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.segmentado button[aria-pressed="true"] {
+  background: var(--superficie);
+  color: var(--tinta);
+  box-shadow: 0 1px 2px rgba(30, 43, 47, 0.12);
+}
+
+.buscador {
+  width: 260px;
+  height: 38px;
+}
+
+/* Tabla */
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+}
+
+.tabla th {
+  padding: var(--e-3) var(--e-5);
+  text-align: left;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--tinta-3);
+  background: var(--superficie-2);
+  border-bottom: 1px solid var(--linea);
+  white-space: nowrap;
+}
+
+.tabla td {
+  padding: var(--e-4) var(--e-5);
+  border-bottom: 1px solid var(--linea);
+  vertical-align: top;
+}
+
+.tabla tr:last-child td {
+  border-bottom: 0;
+}
+
+.tabla__principal {
+  display: grid;
+  gap: 2px;
+}
+
+.tabla__principal strong {
+  font-weight: 600;
+}
+
+.tabla__secundario {
+  color: var(--tinta-3);
+  font-size: var(--t-xs);
+}
+
+.tabla__acciones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.vacio {
+  display: grid;
+  justify-items: start;
+  gap: var(--e-2);
+  padding: var(--e-10) var(--e-6);
+  color: var(--tinta-2);
+}
+
+.vacio strong {
+  color: var(--tinta);
+  font-size: var(--t-md);
+  font-weight: 600;
+}
+
+/* Cajón lateral (formulario de alta) */
+.cajon-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(30, 43, 47, 0.32);
+  animation: desvanecer 160ms ease-out;
+}
+
+.cajon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  width: min(480px, 100vw);
+  background: var(--superficie);
+  box-shadow: -16px 0 40px -24px rgba(30, 43, 47, 0.5);
+  animation: deslizar 200ms ease-out;
+}
+
+.cajon__cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e-4);
+  padding: var(--e-6);
+  border-bottom: 1px solid var(--linea);
+}
+
+.cajon__cabecera h2 {
+  font-size: var(--t-lg);
+}
+
+.cajon__cabecera p {
+  margin-top: var(--e-1);
+  font-size: var(--t-sm);
+  color: var(--tinta-2);
+}
+
+.cajon__cuerpo {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--e-6);
+}
+
+.cajon__pie {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--e-3);
+  padding: var(--e-4) var(--e-6);
+  border-top: 1px solid var(--linea);
+}
+
+.cerrar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: var(--tinta-2);
+  cursor: pointer;
+}
+
+.cerrar:hover {
+  background: var(--superficie-2);
+}
+
+@keyframes deslizar {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+
+@keyframes desvanecer {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Portal ciudadano y consola del funcionario */
+.bienvenida {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--e-6);
+  align-items: start;
+}
+
+.bienvenida__saludo {
+  padding: var(--e-8) 0;
+}
+
+.bienvenida__saludo h1 {
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+
+.bienvenida__saludo p {
+  margin-top: var(--e-3);
+  color: var(--tinta-2);
+  font-size: var(--t-md);
+  max-width: 46ch;
+}
+
+.datos {
+  display: grid;
+  margin: 0;
+}
+
+.datos div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--e-3);
+  padding: var(--e-3) var(--e-5);
+  border-bottom: 1px solid var(--linea);
+  font-size: var(--t-sm);
+}
+
+.datos div:last-child {
+  border-bottom: 0;
+}
+
+.datos dt {
+  color: var(--tinta-3);
+}
+
+.datos dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 860px) {
+  .barra {
+    padding: 0 var(--e-4);
+    gap: var(--e-3);
+  }
+  .barra__seccion,
+  .barra__identidad {
+    display: none;
+  }
+  .app__contenido {
+    padding: var(--e-5) var(--e-4);
+  }
+  .encabezado-pagina {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .bienvenida {
+    grid-template-columns: 1fr;
+  }
+  .bienvenida__saludo {
+    padding: var(--e-6) 0;
+  }
+  .filtros {
+    flex-wrap: wrap;
+  }
+  .buscador {
+    width: 100%;
+  }
+}
+
+button.volver {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--primario);
+  cursor: pointer;
+}
+
+.acceso__mensaje {
+  margin-bottom: var(--e-5);
+}
+
+.panel__titulo {
+  font-size: var(--t-md);
+}
+
+.separado {
+  margin-top: var(--e-6);
+}
+
+.cajon__formulario {
+  display: contents;
+}
