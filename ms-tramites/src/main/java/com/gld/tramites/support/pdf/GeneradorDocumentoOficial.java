@@ -113,7 +113,12 @@ public class GeneradorDocumentoOficial {
         pdf.texto(MARGEN + 14, yCaja + alto - 22, Fuente.NEGRITA, 10, PRIMARIO, "Código de verificación");
         pdf.texto(MARGEN + 14, yCaja + alto - 42, Fuente.NEGRITA, 16, TINTA, d.codigoVerificacion());
         pdf.texto(MARGEN + 210, yCaja + alto - 22, Fuente.NORMAL, 9, TINTA_SUAVE, "Verifica la autenticidad de este documento en:");
-        pdf.texto(MARGEN + 210, yCaja + alto - 36, Fuente.NORMAL, 9, TINTA, d.urlVerificacion());
+        // La dirección se parte en líneas para que no se salga del recuadro (en Codespaces es larga)
+        float yUrl = yCaja + alto - 36;
+        for (String linea : partirEnlace(d.urlVerificacion(), Fuente.NORMAL, 9, ANCHO_UTIL - 210 - 14)) {
+            pdf.texto(MARGEN + 210, yUrl, Fuente.NORMAL, 9, TINTA, linea);
+            yUrl -= 11;
+        }
         pdf.texto(MARGEN + 14, yCaja + 26, Fuente.NEGRITA, 8, TINTA_SUAVE, "Sello digital (SHA-256)");
         pdf.texto(MARGEN + 14, yCaja + 13, Fuente.NORMAL, 8, TINTA_SUAVE, d.selloSha256());
 
@@ -131,5 +136,34 @@ public class GeneradorDocumentoOficial {
 
     private static boolean tieneTexto(String valor) {
         return valor != null && !valor.isBlank();
+    }
+
+    /**
+     * Parte un enlace (sin espacios) en líneas de hasta {@code anchoMaximo}, cortando de preferencia
+     * después de "/", "?", "&" o "=". Como máximo 3 líneas.
+     */
+    static List<String> partirEnlace(String enlace, Fuente fuente, float tamano, float anchoMaximo) {
+        List<String> lineas = new ArrayList<>();
+        String resto = enlace == null ? "" : enlace;
+        while (!resto.isEmpty() && lineas.size() < 3) {
+            if (LienzoPdf.anchoTexto(resto, fuente, tamano) <= anchoMaximo || lineas.size() == 2) {
+                lineas.add(resto);
+                break;
+            }
+            int cabe = 1;
+            while (cabe < resto.length() && LienzoPdf.anchoTexto(resto.substring(0, cabe + 1), fuente, tamano) <= anchoMaximo) {
+                cabe++;
+            }
+            int corte = cabe;
+            for (int i = cabe; i > cabe / 2; i--) {
+                if ("/?&=".indexOf(resto.charAt(i - 1)) >= 0) {
+                    corte = i;
+                    break;
+                }
+            }
+            lineas.add(resto.substring(0, corte));
+            resto = resto.substring(corte);
+        }
+        return lineas;
     }
 }
