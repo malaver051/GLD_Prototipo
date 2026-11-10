@@ -1,0 +1,25 @@
+# Entorno de GitHub Codespaces del prototipo GLD.
+# "app" es el computador donde corren VS Code, los microservicios y el frontend.
+# "db" es PostgreSQL con la misma base y clave que se usan en local (gld / postgres / 1234),
+# así que los application.properties no cambian.
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/java:1-21-bookworm
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    # Comparte la red con "db": dentro de app, PostgreSQL responde en localhost:5432
+    network_mode: service:db
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "1234"
+      POSTGRES_DB: gld
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

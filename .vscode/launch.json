@@ -5,7 +5,8 @@
       "type": "java",
       "name": "ComunidadApplication",
       "request": "launch",
-      "mainClass": "com.gld.comunidad.ComunidadApplication"
+      "mainClass": "com.gld.comunidad.ComunidadApplication",
+      "projectName": "ms-comunidad"
     },
     {
       "type": "java",
@@ -20,6 +21,13 @@
       "request": "launch",
       "mainClass": "com.gld.identidad.IdentidadApplication",
       "projectName": "ms-identidad"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Backend completo (3 microservicios)",
+      "configurations": ["ms-identidad", "TramitesApplication", "ComunidadApplication"],
+      "stopAll": true
     }
   ]
 }

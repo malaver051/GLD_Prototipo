@@ -1,0 +1,37 @@
+{
+  "name": "GLD Prototipo",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  // Java 21 viene en la imagen; se agregan Maven y Node 22 para el frontend
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": { "version": "none", "installMaven": "true" },
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" }
+  },
+
+  "hostRequirements": { "memory": "8gb" },
+
+  // Solo el frontend se abre en el navegador; Vite reenvía /api/v1/... a cada microservicio
+  "forwardPorts": [5173, 8081, 8082, 8083],
+  "portsAttributes": {
+    "5173": { "label": "GLD · frontend", "onAutoForward": "openBrowser" },
+    "8081": { "label": "ms-identidad", "onAutoForward": "silent" },
+    "8082": { "label": "ms-tramites", "onAutoForward": "silent" },
+    "8083": { "label": "ms-comunidad", "onAutoForward": "silent" }
+  },
+
+  // Dirección pública del frontend en este Codespace: los microservicios la usan
+  // para CORS y para el enlace de recuperación de contraseña (gld.frontend.url)
+  "remoteEnv": {
+    "GLD_FRONTEND_URL": "https://${containerEnv:CODESPACE_NAME}-5173.${containerEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
+  },
+
+  "postCreateCommand": "cd frontend && npm install",
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["vscjava.vscode-java-pack", "vmware.vscode-boot-dev-pack"]
+    }
+  }
+}
