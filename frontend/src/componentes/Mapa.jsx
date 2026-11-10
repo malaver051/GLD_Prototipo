@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react'
 import L from 'leaflet'
 
-const TESELAS = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-const ATRIBUCION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+// Mapa base de CARTO (datos de OpenStreetMap). Los servidores de teselas de OpenStreetMap
+// bloquean (403) las peticiones desde dominios como *.app.github.dev de Codespaces.
+const TESELAS = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+const ATRIBUCION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
 
 // Pin del punto elegido (dibujado con CSS: no depende de imágenes de Leaflet)
 const iconoPunto = () =>
@@ -42,7 +45,7 @@ export default function Mapa({
   useEffect(() => {
     const m = L.map(contenedor.current, { zoomControl: true, attributionControl: true })
     m.setView(centro || [23.6345, -102.5528], centro ? zoom : 5)
-    L.tileLayer(TESELAS, { maxZoom: 19, attribution: ATRIBUCION }).addTo(m)
+    L.tileLayer(TESELAS, { maxZoom: 19, subdomains: 'abcd', attribution: ATRIBUCION }).addTo(m)
     capaMarcadores.current = L.layerGroup().addTo(m)
     capaPunto.current = L.layerGroup().addTo(m)
     m.on('click', (e) => alElegir.current?.(redondear(e.latlng.lat), redondear(e.latlng.lng)))
