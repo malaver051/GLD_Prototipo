@@ -21,12 +21,6 @@
     "8083": { "label": "ms-comunidad", "onAutoForward": "silent" }
   },
 
-  // Dirección pública del frontend en este Codespace: los microservicios la usan
-  // para CORS y para el enlace de recuperación de contraseña (gld.frontend.url)
-  "remoteEnv": {
-    "GLD_FRONTEND_URL": "https://${containerEnv:CODESPACE_NAME}-5173.${containerEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
-  },
-
   "postCreateCommand": "cd frontend && npm install",
 
   "customizations": {

@@ -1,5 +1,6 @@
 package com.gld.tramites.service;
 
+import com.gld.tramites.support.OrigenFrontend;
 import com.gld.tramites.config.PropiedadesGld;
 import com.gld.tramites.model.SolicitudTramite;
 import com.gld.tramites.support.notificacion.NotificadorCorreo;
@@ -58,6 +59,6 @@ public class NotificacionesTramite {
     private void enviar(SolicitudTramite s, String asunto, String mensaje) {
         correo.enviar(s.getCorreoCiudadano(), asunto,
                 "Hola, " + s.getNombreCiudadano() + ".\n\n" + mensaje + "\n\n"
-                        + "Consulta el detalle en: " + urlFrontend + "/portal/solicitudes/" + s.getIdSolicitud());
+                        + "Consulta el detalle en: " + OrigenFrontend.resolver(urlFrontend) + "/portal/solicitudes/" + s.getIdSolicitud());
     }
 }

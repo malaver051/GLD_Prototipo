@@ -1,5 +1,6 @@
 package com.gld.comunidad.service;
 
+import com.gld.comunidad.support.OrigenFrontend;
 import com.gld.comunidad.config.PropiedadesGld;
 import com.gld.comunidad.model.Incidencia;
 import com.gld.comunidad.support.notificacion.NotificadorCorreo;
@@ -45,6 +46,6 @@ public class NotificacionesIncidencia {
     private void enviar(Incidencia i, String asunto, String mensaje) {
         correo.enviar(i.getCorreoCiudadano(), asunto,
                 "Hola, " + i.getNombreCiudadano() + ".\n\n" + mensaje + "\n\n"
-                        + "Consulta el detalle en: " + urlFrontend + "/portal/incidencias/" + i.getIdIncidencia());
+                        + "Consulta el detalle en: " + OrigenFrontend.resolver(urlFrontend) + "/portal/incidencias/" + i.getIdIncidencia());
     }
 }
