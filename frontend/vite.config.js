@@ -55,4 +55,10 @@ export default defineConfig({
       '/teselas': teselasOsm,
     },
   },
+  // `npm run demo`: sirve la versión compilada (un solo archivo, mucho más rápida en Codespaces)
+  // en el mismo puerto 5173; host, allowedHosts y proxy se heredan de `server`.
+  preview: {
+    port: 5173,
+    strictPort: true,
+  },
 })
