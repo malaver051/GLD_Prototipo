@@ -1,5 +1,6 @@
 package com.gld.identidad.service;
 
+import com.gld.identidad.support.OrigenFrontend;
 import com.gld.identidad.config.PropiedadesGld;
 import com.gld.identidad.dto.EstadoEnlace;
 import com.gld.identidad.dto.Mensaje;
@@ -77,7 +78,7 @@ public class RecuperacionClaveService {
             notificador.enviar(usuario.getCorreo(), "Crea una nueva contraseña en GLD",
                     "Hola, " + usuario.getNombreCompleto() + ".\n\n"
                             + "Recibimos una solicitud para cambiar tu contraseña. Abre este enlace para crear una nueva:\n"
-                            + urlFrontend + "/restablecer?token=" + token + "\n\n"
+                            + OrigenFrontend.resolver(urlFrontend) + "/restablecer?token=" + token + "\n\n"
                             + "El enlace vence en " + minutosVigencia + " minutos y solo se puede usar una vez.\n"
                             + "Si no lo solicitaste, ignora este correo: tu contraseña actual sigue funcionando.");
         }

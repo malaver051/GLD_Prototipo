@@ -13,7 +13,13 @@ const haciaMicroservicio = (target) => ({
   target,
   changeOrigin: true,
   configure: (proxy) => {
-    proxy.on('proxyReq', (peticion) => peticion.removeHeader('origin'))
+    proxy.on('proxyReq', (peticion, req) => {
+      peticion.removeHeader('origin')
+      // Dirección desde la que se abrió la app: los enlaces de correos y del PDF apuntan a ella
+      const host = req.headers['x-forwarded-host'] || req.headers.host
+      const protocolo = req.headers['x-forwarded-proto'] || (host?.startsWith('localhost') ? 'http' : 'https')
+      if (host) peticion.setHeader('X-Gld-Frontend', `${String(protocolo).split(',')[0]}://${String(host).split(',')[0]}`)
+    })
   },
 })
 

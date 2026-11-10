@@ -1,5 +1,6 @@
 package com.gld.tramites.service;
 
+import com.gld.tramites.support.OrigenFrontend;
 import com.gld.tramites.config.PropiedadesGld;
 import com.gld.tramites.dto.Verificacion;
 import com.gld.tramites.model.Documento;
@@ -67,7 +68,7 @@ public class DocumentoService {
                 comentario,
                 nombreFuncionario,
                 codigo,
-                urlFrontend + "/verificar?codigo=" + codigo,
+                OrigenFrontend.resolver(urlFrontend) + "/verificar?codigo=" + codigo,
                 sello));
 
         String nombreArchivo = "documento-oficial-" + s.getNumeroRadicado() + ".pdf";
