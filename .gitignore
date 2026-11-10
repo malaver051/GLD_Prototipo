@@ -1,3 +1,5 @@
 node_modules/
 dist/
 target/
+# Datos de PostgreSQL del Codespace
+.postgres-datos/
