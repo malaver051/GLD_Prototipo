@@ -21,6 +21,17 @@ Codespaces abre el proyecto en un computador en la nube de GitHub, con VS Code e
 
 La dirección tiene la forma `https://<nombre-del-codespace>-5173.app.github.dev` y funciona desde cualquier computador.
 
+### Para la exposición: modo rápido
+
+`npm run dev` sirve cientos de archivos sueltos y, a través de Codespaces, la primera carga es lenta. Para la demo usa la versión compilada, que es un solo archivo y carga mucho más rápido, en la misma dirección del puerto 5173:
+
+```
+cd frontend
+npm run demo
+```
+
+Tarda unos 20 segundos en compilar y queda lista cuando dice `Local: http://localhost:5173/`. Si cambias código del frontend, detenla (Ctrl+C) y vuelve a correrla.
+
 ## 3. Compartirlo con otras personas (por ejemplo, el profesor)
 
 Por defecto solo tú puedes abrir la dirección. Para que cualquiera con el enlace la abra: pestaña **Puertos** → clic derecho en **5173** → **Visibilidad del puerto → Pública**.
