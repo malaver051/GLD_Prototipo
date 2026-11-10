@@ -17,6 +17,22 @@ const haciaMicroservicio = (target) => ({
   },
 })
 
+// Teselas del mapa: se piden a tile.openstreetmap.org desde el servidor de Vite,
+// identificando la aplicación con su User-Agent y sin el Referer del navegador.
+const teselasOsm = {
+  target: 'https://tile.openstreetmap.org',
+  changeOrigin: true,
+  rewrite: (ruta) => ruta.replace(/^\/teselas/, ''),
+  configure: (proxy) => {
+    proxy.on('proxyReq', (peticion) => {
+      peticion.removeHeader('referer')
+      peticion.removeHeader('origin')
+      peticion.removeHeader('cookie')
+      peticion.setHeader('User-Agent', 'GLD-Prototipo/1.0 (proyecto academico; github.com/malaver051/GLD_Prototipo)')
+    })
+  },
+}
+
 // En GitHub Codespaces la app se abre en https://<codespace>-5173.app.github.dev
 const enCodespaces = Boolean(process.env.CODESPACES)
 
@@ -30,6 +46,7 @@ export default defineConfig({
       '/api/v1/identidad': haciaMicroservicio('http://localhost:8081'),
       '/api/v1/tramites': haciaMicroservicio('http://localhost:8082'),
       '/api/v1/comunidad': haciaMicroservicio('http://localhost:8083'),
+      '/teselas': teselasOsm,
     },
   },
 })
